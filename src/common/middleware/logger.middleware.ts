@@ -10,6 +10,11 @@ export class LoggerMiddleware implements NestMiddleware {
   ) {}
 
   use(req: Request, res: Response, next: NextFunction) {
+    // 如果是根路径，直接调用 next() 并返回
+    if (req.originalUrl === '/') {
+      return next();
+    }
+
     const { method, originalUrl: url, ip } = req;
 
     const logInfo: any = {

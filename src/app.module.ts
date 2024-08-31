@@ -9,6 +9,9 @@ import 'winston-daily-rotate-file';
 import { createLogger } from 'winston';
 import { LoggerMiddleware } from '@/common/middleware/logger.middleware';
 import { fileLogger, consoleLogger } from '@/utils/logger';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { XxstudyModule } from './modules/xxstudy/xxstudy.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
 
 @Global()
 @Module({
@@ -22,9 +25,26 @@ import { fileLogger, consoleLogger } from '@/utils/logger';
         transports: [...fileLogger.transports, ...consoleLogger.transports],
       }),
     }),
+    TypeOrmModule.forRoot({
+      type: 'mysql',
+      host: '10.0.0.2',
+      port: 3306,
+      username: 'nest',
+      password: 'NPETJbkPfiwStze2',
+      database: 'nest', //数据库名
+      synchronize: true,
+      // logging: true,
+      retryDelay: 500,
+      retryAttempts: 10,
+      autoLoadEntities: true, // 自动加载实体
+    }),
+    ServeStaticModule.forRoot({
+      rootPath: `${process.cwd()}/client`,
+    }),
     BookModule,
     UserModule,
     LylModule,
+    XxstudyModule,
   ],
   controllers: [],
   providers: [
