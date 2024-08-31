@@ -25,13 +25,22 @@ import { ServeStaticModule } from '@nestjs/serve-static';
         transports: [...fileLogger.transports, ...consoleLogger.transports],
       }),
     }),
+    // TypeOrmModule.forRoot({
+    //   type: 'mysql',
+    //   host: '10.0.0.2',
+    //   port: 3306,
+    //   username: 'nest',
+    //   password: 'NPETJbkPfiwStze2',
+    //   database: 'nest', //数据库名
+    //   synchronize: true,
+    //   // logging: true,
+    //   retryDelay: 500,
+    //   retryAttempts: 10,
+    //   autoLoadEntities: true, // 自动加载实体
+    // }),
     TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: '10.0.0.2',
-      port: 3306,
-      username: 'nest',
-      password: 'NPETJbkPfiwStze2',
-      database: 'nest', //数据库名
+      type: 'sqlite',
+      database: `${process.cwd()}/db/nest.db`, // SQLite 数据库文件名
       synchronize: true,
       // logging: true,
       retryDelay: 500,
